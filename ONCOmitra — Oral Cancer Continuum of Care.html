@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<!-- saved from url=(0131)file:///C:/Users/Asus/Documents/Codex/2026-09-20/1-explainable-risk-score-contribution-bars/outputs/oncomitra-explainable-risk.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONCOmitra — Oral Cancer Continuum of Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./ONCOmitra — Oral Cancer Continuum of Care_files/css2" rel="stylesheet">
+<script src="./ONCOmitra — Oral Cancer Continuum of Care_files/chart.umd.min.js.download"></script>
+<style>
+:root{
+  --bg:#F2F5F2;
+  --surface:#FFFFFF;
+  --surface-alt:#E9F0EA;
+  --ink:#132420;
+  --ink-soft:#516059;
+  --ink-faint:#8B978F;
+  --primary:#12463B;
+  --primary-light:#1F6B57;
+  --primary-pale:#DCE9E2;
+  --accent:#B8481F;
+  --accent-pale:#F5DED2;
+  --risk-high:#AE3A2C;
+  --risk-high-bg:#F7DFD9;
+  --risk-med:#B4791C;
+  --risk-med-bg:#F7E7CC;
+  --risk-low:#2E7D52;
+  --risk-low-bg:#DCEFE1;
+  --border:#D9E1DA;
+  --shadow:0 1px 2px rgba(19,36,32,.06),0 6px 20px rgba(19,36,32,.05);
+  --radius:10px;
+  --font-head:'Fraunces',serif;
+  --font-body:'IBM Plex Sans',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+[data-theme="dark"]{
+  --bg:#000000;
+  --surface:#0C0D0C;
+  --surface-alt:#161816;
+  --ink:#F2F3F1;
+  --ink-soft:#9BA39D;
+  --ink-faint:#5E655F;
+  --primary:#5FBE9B;
+  --primary-light:#7ED4B1;
+  --primary-pale:#132420;
+  --accent:#E48857;
+  --accent-pale:#241A13;
+  --risk-high-bg:#241512;
+  --risk-med-bg:#241C10;
+  --risk-low-bg:#101E17;
+  --border:#232523;
+  --shadow:0 1px 2px rgba(0,0,0,.6),0 6px 24px rgba(0,0,0,.55);
+}
+[data-theme="dark"] .sidebar{background:#0A0B0A;border-right:1px solid #202220;}
+[data-theme="dark"] .brand{border-bottom-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .nav-item{color:rgba(242,243,241,.65);}
+[data-theme="dark"] .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+[data-theme="dark"] .nav-item.active{background:rgba(255,255,255,.1);color:#fff;}
+[data-theme="dark"] .nav-group-label{color:rgba(242,243,241,.32);}
+[data-theme="dark"] .sidebar-foot{border-top-color:rgba(255,255,255,.08);color:rgba(242,243,241,.4);}
+[data-theme="dark"] .brand-mark{background:var(--accent);}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;}
+a{color:inherit;}
+::selection{background:var(--primary-pale);}
+
+.app{display:flex;min-height:100vh;}
+
+/* ---------- LOGIN ---------- */
+.login-screen{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#0b3028 0%,var(--primary) 47%,#1e5b4a 100%);display:grid;place-items:center;padding:24px;overflow:auto;}
+.login-wrap{width:min(920px,100%);display:grid;grid-template-columns:1.05fr .95fr;border-radius:18px;overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.32);background:var(--surface);}
+.login-intro{padding:48px;background:linear-gradient(155deg,rgba(255,255,255,.11),rgba(255,255,255,.03));color:#eff6f1;display:flex;flex-direction:column;justify-content:space-between;min-height:520px;}
+.login-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-size:23px;font-weight:600;}.login-brand .brand-mark{background:var(--accent);}
+.login-intro h1{font-family:var(--font-head);font-size:36px;line-height:1.08;margin:44px 0 12px;max-width:390px;}.login-intro p{color:rgba(239,246,241,.75);font-size:14px;line-height:1.55;max-width:360px;}.login-note{font-size:11.5px;color:rgba(239,246,241,.55);}
+.login-card{padding:48px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;}.login-card h2{font-family:var(--font-head);font-size:27px;margin:0 0 7px;}.login-card .sub{font-size:13px;color:var(--ink-soft);margin:0 0 28px;}.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}.login-field label{font-size:12.5px;font-weight:600;color:var(--ink-soft);}.login-field input,.login-field select{border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-size:14px;background:var(--surface);color:var(--ink);outline:none;}.login-field input:focus,.login-field select:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px var(--primary-pale);}.login-submit{width:100%;justify-content:center;margin-top:7px;padding:11px;}.login-actions{display:flex;justify-content:space-between;gap:10px;margin-top:17px;font-size:12px;color:var(--ink-soft);}.login-link{background:none;border:0;padding:0;color:var(--primary-light);font-size:12px;cursor:pointer;text-decoration:underline;}.login-error{min-height:18px;margin:4px 0 0;color:var(--risk-high);font-size:12px;}
+@media (max-width:720px){.login-wrap{grid-template-columns:1fr;}.login-intro{min-height:0;padding:28px;}.login-intro h1{font-size:27px;margin:25px 0 8px;}.login-note{display:none;}.login-card{padding:30px 28px;}}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:230px;flex:none;
+  background:var(--primary);
+  color:#EFF6F1;
+  display:flex;flex-direction:column;
+  padding:22px 14px;
+  position:sticky;top:0;height:100vh;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:0 8px 22px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:16px;}
+.brand-mark{width:34px;height:34px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:16px;color:#fff;flex:none;}
+.brand-name{font-family:var(--font-head);font-size:19px;font-weight:600;letter-spacing:.2px;}
+.brand-sub{font-size:11px;color:rgba(239,246,241,.6);margin-top:1px;}
+.nav{display:flex;flex-direction:column;gap:2px;flex:1;}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 10px;border-radius:8px;
+  color:rgba(239,246,241,.78);
+  font-size:14px;font-weight:500;cursor:pointer;
+  border:none;background:none;text-align:left;width:100%;
+}
+.nav-item svg{width:17px;height:17px;flex:none;opacity:.85;}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff;}
+.nav-item.active{background:rgba(255,255,255,.14);color:#fff;}
+.nav-group-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:rgba(239,246,241,.4);margin:14px 10px 4px;}
+.sidebar-foot{border-top:1px solid rgba(255,255,255,.14);padding-top:12px;margin-top:8px;font-size:12px;color:rgba(239,246,241,.55);line-height:1.5;}
+
+/* ---------- MAIN ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 26px;background:var(--surface);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;
+}
+.search-box{
+  flex:1;max-width:380px;display:flex;align-items:center;gap:8px;
+  background:var(--surface-alt);border:1px solid var(--border);
+  border-radius:8px;padding:8px 12px;color:var(--ink-soft);
+}
+.search-box input{border:none;background:none;outline:none;font-size:13.5px;color:var(--ink);width:100%;}
+.search-box svg{width:15px;height:15px;flex:none;opacity:.6;}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.icon-btn{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;color:var(--ink-soft);
+}
+.icon-btn:hover{background:var(--surface-alt);color:var(--ink);}
+.icon-btn svg{width:17px;height:17px;}
+.badge-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;background:var(--accent);border:1.5px solid var(--surface);}
+.select-pill{
+  border:1px solid var(--border);background:var(--surface);border-radius:8px;
+  padding:8px 10px;font-size:13px;color:var(--ink);cursor:pointer;
+}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--primary-pale);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;cursor:pointer;}
+
+.content{padding:26px;max-width:1280px;width:100%;margin:0 auto;}
+.panel{display:none;}
+.panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.page-title{font-family:var(--font-head);font-size:27px;font-weight:600;margin:0 0 4px;}
+.page-desc{color:var(--ink-soft);font-size:14px;margin:0;max-width:60ch;}
+.btn{
+  border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;
+  cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:var(--primary-light);}
+.btn-accent{background:var(--accent);color:#fff;}
+.btn-ghost{background:var(--surface);border:1px solid var(--border);color:var(--ink);}
+.btn-ghost:hover{background:var(--surface-alt);}
+.btn-sm{padding:6px 11px;font-size:12.5px;}
+.btn svg{width:14px;height:14px;}
+
+/* KPI cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);}
+.kpi-label{font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;}
+.kpi-value{font-family:var(--font-head);font-size:26px;font-weight:600;line-height:1;}
+.kpi-trend{font-size:11.5px;margin-top:6px;font-weight:600;}
+.trend-up{color:var(--risk-low);}
+.trend-down{color:var(--risk-high);}
+
+.grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
+.card h3{font-family:var(--font-head);font-size:16.5px;margin:0 0 4px;font-weight:600;}
+.card .card-sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 14px;}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:6px;}
+.funnel-row{display:grid;grid-template-columns:120px 1fr 46px;align-items:center;gap:10px;font-size:12.5px;}
+.funnel-bar-wrap{background:var(--surface-alt);border-radius:6px;overflow:hidden;height:20px;}
+.funnel-bar{height:100%;background:var(--primary-light);border-radius:6px;}
+.funnel-count{text-align:right;color:var(--ink-soft);font-family:var(--font-mono);}
+
+/* activity feed */
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.feed-item:last-child{border-bottom:none;}
+.feed-dot{width:7px;height:7px;border-radius:50%;background:var(--primary-light);margin-top:5px;flex:none;}
+.feed-text b{font-weight:600;}
+.feed-time{color:var(--ink-faint);font-size:11.5px;margin-top:1px;}
+
+/* Consent banner */
+.banner{display:flex;align-items:center;gap:14px;background:var(--primary-pale);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:20px;font-size:13px;}
+.banner p{margin:0;flex:1;color:var(--ink);}
+
+/* forms */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:12.5px;font-weight:600;color:var(--ink-soft);}
+.field input,.field select,.field textarea{
+  border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13.5px;
+  background:var(--surface);color:var(--ink);outline:none;
+}
+.field textarea{resize:vertical;min-height:70px;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary-light);}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;}
+.chk input{width:15px;height:15px;}
+.upload-box{border:1.5px dashed var(--border);border-radius:10px;padding:22px;text-align:center;color:var(--ink-soft);font-size:13px;cursor:pointer;background:var(--surface-alt);}
+.upload-box.has-img{padding:10px;}
+.upload-box img{max-height:130px;border-radius:6px;}
+.voice-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;}
+.voice-btn.listening{background:var(--accent-pale);border-color:var(--accent);color:var(--accent);}
+
+.result-box{margin-top:18px;border:1px solid var(--border);border-radius:var(--radius);padding:18px;background:var(--surface-alt);display:none;}
+.result-box.show{display:block;}
+.risk-score-row{display:flex;align-items:center;gap:16px;}
+.risk-ring{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:18px;flex:none;}
+.explainability{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-top:16px;padding-top:15px;border-top:1px solid var(--border);}
+.explainability h4{font-size:12.5px;margin:0 0 10px;color:var(--ink);}
+.contribution-row{display:grid;grid-template-columns:112px 1fr 34px;gap:8px;align-items:center;margin:8px 0;font-size:12px;}
+.contribution-label{color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.contribution-track{height:8px;background:var(--border);border-radius:99px;overflow:hidden;}
+.contribution-bar{height:100%;border-radius:99px;background:var(--primary-light);transition:width .4s ease;}
+.contribution-row.alert .contribution-bar{background:var(--accent);}
+.contribution-value{text-align:right;font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);}
+.heatmap-preview{position:relative;min-height:132px;border-radius:9px;overflow:hidden;background:radial-gradient(ellipse at 50% 35%,#eeaba0 0 16%,#d97a73 17% 30%,#8f3e3e 31% 48%,#522826 49% 100%);border:1px solid var(--border);}
+.heatmap-preview.has-photo{background-size:cover;background-position:center;}
+.heatmap-preview:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,72,31,.05),rgba(184,72,31,.18));pointer-events:none;}
+.lesion-hotspot{position:absolute;width:43px;height:33px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,237,99,.98) 0 15%,rgba(237,96,35,.78) 38%,rgba(184,40,25,.24) 70%,transparent 72%);box-shadow:0 0 16px rgba(255,111,35,.85);border:1px solid rgba(255,239,170,.85);z-index:1;}
+.heatmap-caption{position:absolute;bottom:7px;left:8px;z-index:2;padding:3px 6px;border-radius:4px;background:rgba(18,25,22,.72);color:#fff;font-size:10.5px;}
+@media (max-width:640px){.explainability{grid-template-columns:1fr;}.contribution-row{grid-template-columns:98px 1fr 30px;}}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:100px;font-size:11.5px;font-weight:600;}
+.badge.high{background:var(--risk-high-bg);color:var(--risk-high,#AE3A2C);}
+.badge.med{background:var(--risk-med-bg);color:var(--risk-med,#B4791C);}
+.badge.low{background:var(--risk-low-bg);color:var(--risk-low,#2E7D52);}
+.badge.stage{background:var(--surface-alt);color:var(--ink-soft);border:1px solid var(--border);}
+
+/* table */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.table-controls{display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:10px 14px;background:var(--surface-alt);color:var(--ink-soft);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;user-select:none;white-space:nowrap;}
+th:hover{color:var(--ink);}
+td{padding:11px 14px;border-top:1px solid var(--border);vertical-align:middle;}
+tr.row-clickable{cursor:pointer;}
+tr.row-clickable:hover{background:var(--surface-alt);}
+.name-cell{font-weight:600;}
+.village-cell{color:var(--ink-soft);font-size:12px;}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,20,17,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--surface);border-radius:14px;max-width:640px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 22px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);}
+.modal-body{padding:22px;}
+.modal-close{border:none;background:var(--surface-alt);width:30px;height:30px;border-radius:8px;cursor:pointer;color:var(--ink-soft);}
+
+/* timeline */
+.timeline{display:flex;flex-direction:column;gap:0;margin-top:14px;}
+.tl-item{display:flex;gap:12px;position:relative;padding-bottom:20px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-marker{width:11px;height:11px;border-radius:50%;background:var(--primary-light);margin-top:4px;flex:none;position:relative;z-index:1;}
+.tl-item.pending .tl-marker{background:var(--border);}
+.tl-line{position:absolute;left:5px;top:14px;bottom:0;width:1.5px;background:var(--border);}
+.tl-content b{font-size:13.5px;}
+.tl-content p{margin:2px 0 0;font-size:12.5px;color:var(--ink-soft);}
+
+/* kanban */
+.kanban{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;overflow-x:auto;}
+.kcol{background:var(--surface-alt);border-radius:var(--radius);padding:10px;min-height:340px;}
+.kcol-head{font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px;display:flex;justify-content:space-between;}
+.kcard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 11px;margin-bottom:8px;cursor:grab;box-shadow:var(--shadow);font-size:12.5px;}
+.kcard.dragging{opacity:.4;}
+.kcard b{font-size:13px;display:block;margin-bottom:3px;}
+.kcol.dragover{outline:2px dashed var(--primary-light);outline-offset:-4px;}
+
+/* charts grid */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.chart-card canvas{max-height:230px;}
+
+/* heatmap */
+.heatmap{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+.heat-cell{border-radius:8px;padding:10px 8px;font-size:11.5px;color:#fff;text-align:center;}
+.heat-cell b{display:block;font-size:15px;font-family:var(--font-head);}
+
+/* architecture diagram */
+.arch{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0 20px;}
+.arch-node{background:var(--primary);color:#fff;padding:10px 22px;border-radius:9px;font-weight:600;font-size:13.5px;font-family:var(--font-head);}
+.arch-line{width:1.5px;height:22px;background:var(--border);}
+.arch-row{display:flex;gap:16px;}
+.arch-leaf{background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:10px 16px;text-align:center;min-width:150px;}
+.arch-leaf b{display:block;font-size:13px;margin-bottom:5px;font-family:var(--font-head);}
+.arch-leaf span{font-size:11px;color:var(--ink-soft);display:block;line-height:1.5;}
+
+/* settings */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pref-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+.pref-row:last-child{border-bottom:none;}
+.switch{position:relative;width:38px;height:21px;flex:none;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{position:absolute;inset:0;background:var(--border);border-radius:20px;cursor:pointer;transition:.2s;}
+.slider:before{content:"";position:absolute;width:16px;height:16px;left:2.5px;top:2.5px;background:#fff;border-radius:50%;transition:.2s;}
+input:checked + .slider{background:var(--primary-light);}
+input:checked + .slider:before{transform:translateX(17px);}
+
+/* toast */
+.toast-wrap{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:8px;z-index:200;}
+.toast{background:var(--primary);color:#fff;padding:12px 16px;border-radius:9px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;gap:9px;min-width:220px;animation:toastin .2s ease;}
+@keyframes toastin{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:11px;padding:3px 8px;border-radius:100px;background:var(--surface-alt);border:1px solid var(--border);color:var(--ink-soft);cursor:pointer;}
+.tag.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+.empty-state{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;}
+
+@media (max-width:980px){
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+  .grid-2,.chart-grid,.settings-grid,.form-grid{grid-template-columns:1fr;}
+  .kanban{grid-template-columns:repeat(3,1fr);}
+  .sidebar{display:none;}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<section class="login-screen" id="loginScreen" aria-label="ONCOmitra sign in" style="display: none;">
+  <div class="login-wrap">
+    <div class="login-intro">
+      <div>
+        <div class="login-brand"><span class="brand-mark">Om</span> ONCOmitra</div>
+        <h1>Earlier detection starts with a trusted sign-in.</h1>
+        <p>Secure access for ASHA workers, clinicians and programme teams working across the oral-cancer care pathway.</p>
+      </div>
+      <div class="login-note">Prototype only · Do not enter real patient information</div>
+    </div>
+    <form class="login-card" id="loginForm">
+      <h2>Welcome back</h2>
+      <p class="sub">Sign in to continue to your care dashboard.</p>
+      <div class="login-field"><label for="loginId">Mobile number or worker ID</label><input id="loginId" autocomplete="username" placeholder="e.g. ASHA-2048" required=""></div>
+      <div class="login-field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required=""></div>
+      <div class="login-field"><label for="loginRole">Sign in as</label><select id="loginRole"><option value="asha">ASHA worker</option><option value="clinician" selected="">Clinician</option><option value="admin">Programme administrator</option></select></div>
+      <div class="login-error" id="loginError" role="alert"></div>
+      <button class="btn btn-primary login-submit" type="submit">Sign in securely</button>
+      <div class="login-actions"><span>Demo: enter any ID and password</span><button class="login-link" type="button" id="forgotPasswordBtn">Need help signing in?</button></div>
+    </form>
+  </div>
+</section>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">Om</div>
+      <div>
+        <div class="brand-name">ONCOmitra</div>
+        <div class="brand-sub">Continuum of Care</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <button class="nav-item active" data-tab="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>
+        Overview
+      </button>
+      <div class="nav-group-label">Field &amp; Records</div>
+      <button class="nav-item" data-tab="screening">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path><path d="M4 20c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5"></path></svg>
+        Community Screening
+      </button>
+      <button class="nav-item" data-tab="records">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+        Patient Records
+      </button>
+      <button class="nav-item" data-tab="clinical">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3v4M15 3v4M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z"></path><path d="M9.5 13.5h5M12 11v5"></path></svg>
+        Referrals &amp; Clinical
+      </button>
+      <div class="nav-group-label">Insight</div>
+      <button class="nav-item" data-tab="analytics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"></path></svg>
+        Analytics
+      </button>
+      <button class="nav-item" data-tab="research">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2v6L4 20a1.5 1.5 0 0 0 1.4 2h13.2a1.5 1.5 0 0 0 1.4-2L15 8V2M9 2h6M7 15h10"></path></svg>
+        Molecular &amp; Research
+      </button>
+      <div class="nav-group-label">System</div>
+      <button class="nav-item" data-tab="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"></path></svg>
+        Settings
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      Prototype build v0.9 <br>Not for clinical use — demo data only.
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input id="globalSearch" placeholder="Search patients, villages, ASHA workers…">
+      </div>
+      <div class="topbar-right">
+        <select class="select-pill" id="roleSwitch" title="Switch role view">
+          <option value="admin">Admin view</option>
+          <option value="asha">ASHA worker view</option>
+          <option value="clinician" selected="">Clinician view</option>
+          <option value="researcher">Researcher view</option>
+        </select>
+        <select class="select-pill" id="langSwitch" title="Language">
+          <option value="en">EN</option>
+          <option value="hi">हिं</option>
+        </select>
+        <button class="icon-btn" id="themeToggle" title="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+        <button class="icon-btn" id="notifBtn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+          <span class="badge-dot" id="notifDot"></span>
+        </button>
+        <button class="icon-btn" id="helpBtn" title="Help &amp; onboarding">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.9.4-1.4 1-1.4 1.9"></path><path d="M12 17h.01"></path></svg>
+        </button>
+        <div class="avatar" id="profileBtn" title="Profile &amp; feedback">DR</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <section class="panel active" id="panel-overview">
+        <div class="banner">
+          <p><b>Data &amp; consent:</b> This is a prototype using de-identified demo data. In production, screening data would require informed patient consent and role-based access controls before entering the record system.</p>
+          <button class="btn btn-ghost btn-sm" id="dismissBanner">Got it</button>
+        </div>
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Detect early. Connect continuously. Care smarter.</h1>
+            <p class="page-desc">A live view of the community-to-clinic patient journey — from the first field screening to confirmed diagnosis and follow-up.</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-ghost" id="exportOverviewBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4"></path><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+              Export report
+            </button>
+            <button class="btn btn-primary" data-goto="screening">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+              New screening
+            </button>
+          </div>
+        </div>
+
+        <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi-card">
+      <div class="kpi-label">Screening coverage</div>
+      <div class="kpi-value">16</div>
+      <div class="kpi-trend trend-up">+12% this month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Referral completion</div>
+      <div class="kpi-value">75%</div>
+      <div class="kpi-trend trend-up">+4% vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Drop-off rate</div>
+      <div class="kpi-value">19%</div>
+      <div class="kpi-trend trend-up">-3% vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Time to evaluation</div>
+      <div class="kpi-value">6 days</div>
+      <div class="kpi-trend trend-up">-1.2 days</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Biopsy completion</div>
+      <div class="kpi-value">67%</div>
+      <div class="kpi-trend trend-up">+6% vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Follow-up continuity</div>
+      <div class="kpi-value">13%</div>
+      <div class="kpi-trend trend-down">-2% vs last month</div>
+    </div></div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Patient journey funnel</h3>
+            <p class="card-sub">Where patients currently sit in the continuum of care</p>
+            <div class="funnel" id="funnel">
+    <div class="funnel-row">
+      <div>Screened</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;"></div></div>
+      <div class="funnel-count">16</div>
+    </div>
+    <div class="funnel-row">
+      <div>Risk Flagged</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:87.5%;"></div></div>
+      <div class="funnel-count">14</div>
+    </div>
+    <div class="funnel-row">
+      <div>Referred</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:75%;"></div></div>
+      <div class="funnel-count">12</div>
+    </div>
+    <div class="funnel-row">
+      <div>Hospital Visit</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:56.25%;"></div></div>
+      <div class="funnel-count">9</div>
+    </div>
+    <div class="funnel-row">
+      <div>Biopsy</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:50%;"></div></div>
+      <div class="funnel-count">8</div>
+    </div>
+    <div class="funnel-row">
+      <div>Diagnosed</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:25%;"></div></div>
+      <div class="funnel-count">4</div>
+    </div>
+    <div class="funnel-row">
+      <div>Follow-up</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:12.5%;"></div></div>
+      <div class="funnel-count">2</div>
+    </div></div>
+          </div>
+          <div class="card">
+            <h3>Recent activity</h3>
+            <p class="card-sub">Live audit feed across all layers</p>
+            <div class="feed" id="activityFeed">
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Sunita Devi</b> completed a screening in Kaithal</div><div class="feed-time">12 minutes ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Dr. Rao</b> confirmed biopsy for Anita Kumari</div><div class="feed-time">1 hour ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text">System flagged <b>3 patients</b> with no follow-up in 14 days</div><div class="feed-time">3 hours ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Radha Kumari</b> synced 5 offline records</div><div class="feed-time">Yesterday</div></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREENING -->
+      <section class="panel" id="panel-screening">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Community screening</h1>
+            <p class="page-desc">Mobile intake used by ASHA and frontline workers during a field visit.</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="voice-btn" id="voiceBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"></path><path d="M19 11a7 7 0 0 1-14 0M12 18v3"></path></svg>
+              <span id="voiceLabel">Voice intake (Hindi)</span>
+            </button>
+            <span class="tag" id="offlineTag" style="cursor:default;">● Synced</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="form-grid">
+            <div class="field"><label>Patient name</label><input id="f_name" placeholder="e.g. Rekha Devi"></div>
+            <div class="field"><label>Age</label><input id="f_age" type="number" placeholder="e.g. 47"></div>
+            <div class="field"><label>Gender</label>
+              <select id="f_gender"><option>Female</option><option>Male</option><option>Other</option></select>
+            </div>
+            <div class="field"><label>Village / ward</label>
+              <select id="f_village"><option>Ambala City</option><option>Kaithal</option><option>Yamunanagar</option><option>Panchkula</option><option>Karnal</option><option>Kurukshetra</option></select>
+            </div>
+            <div class="field"><label>ASHA / frontline worker</label>
+              <select id="f_asha"><option>Sunita Devi</option><option>Radha Kumari</option><option>Meena Sharma</option><option>Pooja Yadav</option></select>
+            </div>
+            <div class="field">
+              <label>Screening location</label>
+              <button class="btn btn-ghost btn-sm" id="geotagBtn" style="justify-content:flex-start;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span id="geotagLabel">Capture GPS location</span>
+              </button>
+            </div>
+            <div class="field full">
+              <label>Symptoms observed</label>
+              <div class="checklist" id="symptomChecklist">
+  <label class="chk"><input type="checkbox" value="White/red patch" checked=""> White/red patch</label>
+  <label class="chk"><input type="checkbox" value="Non-healing ulcer (&gt;2wks)" checked=""> Non-healing ulcer (&gt;2wks)</label>
+  <label class="chk"><input type="checkbox" value="Difficulty chewing"> Difficulty chewing</label>
+  <label class="chk"><input type="checkbox" value="Restricted mouth opening"> Restricted mouth opening</label>
+  <label class="chk"><input type="checkbox" value="Pain while swallowing"> Pain while swallowing</label>
+  <label class="chk"><input type="checkbox" value="Lump in neck/mouth"> Lump in neck/mouth</label></div>
+            </div>
+            <div class="field"><label>Duration of symptoms</label>
+              <select id="f_duration"><option>Less than 2 weeks</option><option>2–4 weeks</option><option selected="">1–3 months</option><option>3+ months</option></select>
+            </div>
+            <div class="field"><label>Tobacco / areca nut use</label>
+              <select id="f_habit"><option>None</option><option>Occasional</option><option selected="">Regular (smokeless)</option><option>Regular (smoked)</option><option>Both</option></select>
+            </div>
+            <div class="field full">
+              <label>Oral lesion image</label>
+              <div class="upload-box" id="uploadBox">
+                <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                <span id="uploadLabel">Tap to capture or upload a photo of the lesion</span>
+              </div>
+            </div>
+            <div class="field full">
+              <label>Additional notes</label>
+              <textarea id="f_notes" placeholder="Any other observations…"></textarea>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:10px;">
+            <button class="btn btn-primary" id="runTriageBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"></path></svg>
+              Run AI-assisted triage
+            </button>
+            <button class="btn btn-ghost" id="clearFormBtn">Clear form</button>
+          </div>
+
+          <div class="result-box" id="triageResult">
+            <div class="risk-score-row">
+              <div class="risk-ring" id="riskRing">—</div>
+              <div style="flex:1;">
+                <div style="font-weight:600;font-size:14.5px;" id="riskHeadline">—</div>
+                <div style="font-size:12.5px;color:var(--ink-soft);margin-top:2px;" id="riskConfidence">—</div>
+              </div>
+              <span class="badge stage" id="riskBadgeLarge">—</span>
+            </div>
+            <p style="font-size:13px;color:var(--ink);margin:14px 0 10px;" id="riskRecommendation"></p>
+            <div class="explainability" aria-label="Why this risk score was given">
+              <div>
+                <h4>Why this score</h4>
+                <div id="contributionBars"></div>
+                <p style="font-size:10.5px;color:var(--ink-faint);margin:10px 0 0;">Contribution points are shown for screening transparency; they are not a diagnosis.</p>
+              </div>
+              <div>
+                <h4>Area needing review</h4>
+                <div class="heatmap-preview" id="lesionHeatmap" role="img" aria-label="Illustrative heatmap showing a suspicious area on the oral lesion photo">
+                  <span class="lesion-hotspot" id="lesionHotspot"></span>
+                  <span class="heatmap-caption">Illustrative attention map</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:11.5px;color:var(--ink-faint);margin:0 0 14px;">AI output is screening support, not a diagnosis. Final evaluation requires clinical examination.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-accent btn-sm" id="createReferralBtn">Add to patient record &amp; generate referral</button>
+              <button class="btn btn-ghost btn-sm" id="downloadTriageBtn">Download screening report</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECORDS -->
+      <section class="panel" id="panel-records">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Patient records</h1>
+            <p class="page-desc">Longitudinal, searchable view of every patient across the continuum of care.</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-ghost" id="exportCsvBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 3v12m0 0-4-4m4 4 4-4"></path><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-controls">
+            <input id="tableSearch" placeholder="Search by name or village…" style="border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:13px;flex:1;min-width:180px;background:var(--surface);color:var(--ink);">
+            <div class="tag-row" id="riskFilterTags">
+              <span class="tag active" data-risk="all">All risk</span>
+              <span class="tag" data-risk="high">High</span>
+              <span class="tag" data-risk="med">Medium</span>
+              <span class="tag" data-risk="low">Low</span>
+            </div>
+            <select class="select-pill" id="stageFilter"><option value="all">All stages</option><option>Screened</option><option>Risk Flagged</option><option>Referred</option><option>Hospital Visit</option><option>Biopsy</option><option>Diagnosed</option><option>Follow-up</option></select>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="name">Patient ▾</th>
+                <th data-sort="age">Age</th>
+                <th data-sort="village">Village</th>
+                <th data-sort="risk">Risk</th>
+                <th data-sort="stage">Stage</th>
+                <th data-sort="updated">Last update</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="patientTableBody"><tr class="row-clickable" data-id="pbc1yodm">
+      <td class="name-cell">Poonam Kumari</td>
+      <td>38</td>
+      <td class="village-cell">Kurukshetra</td>
+      <td><span class="badge high">93</span></td>
+      <td><span class="badge stage">Screened</span></td>
+      <td>18 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pbc1yodm">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pfzubbj3">
+      <td class="name-cell">Rajesh Rani</td>
+      <td>47</td>
+      <td class="village-cell">Kurukshetra</td>
+      <td><span class="badge med">52</span></td>
+      <td><span class="badge stage">Follow-up</span></td>
+      <td>16 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pfzubbj3">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="p5nt4dqw">
+      <td class="name-cell">Kiran Rani</td>
+      <td>39</td>
+      <td class="village-cell">Kaithal</td>
+      <td><span class="badge low">9</span></td>
+      <td><span class="badge stage">Risk Flagged</span></td>
+      <td>16 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="p5nt4dqw">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pbo70xgo">
+      <td class="name-cell">Kavita Yadav</td>
+      <td>33</td>
+      <td class="village-cell">Karnal</td>
+      <td><span class="badge med">48</span></td>
+      <td><span class="badge stage">Biopsy</span></td>
+      <td>12 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pbo70xgo">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="p0d72lyk">
+      <td class="name-cell">Om Prakash Devi</td>
+      <td>49</td>
+      <td class="village-cell">Yamunanagar</td>
+      <td><span class="badge med">57</span></td>
+      <td><span class="badge stage">Biopsy</span></td>
+      <td>10 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="p0d72lyk">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pytk50xt">
+      <td class="name-cell">Suman Kumar</td>
+      <td>51</td>
+      <td class="village-cell">Kaithal</td>
+      <td><span class="badge low">13</span></td>
+      <td><span class="badge stage">Biopsy</span></td>
+      <td>08 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pytk50xt">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pkm7yjte">
+      <td class="name-cell">Mahesh Sharma</td>
+      <td>49</td>
+      <td class="village-cell">Kaithal</td>
+      <td><span class="badge med">69</span></td>
+      <td><span class="badge stage">Referred</span></td>
+      <td>07 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pkm7yjte">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pimdy8cf">
+      <td class="name-cell">Deepak Singh</td>
+      <td>34</td>
+      <td class="village-cell">Yamunanagar</td>
+      <td><span class="badge med">54</span></td>
+      <td><span class="badge stage">Risk Flagged</span></td>
+      <td>01 Sept</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pimdy8cf">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pceeyk8s">
+      <td class="name-cell">Anita Verma</td>
+      <td>57</td>
+      <td class="village-cell">Yamunanagar</td>
+      <td><span class="badge med">47</span></td>
+      <td><span class="badge stage">Screened</span></td>
+      <td>31 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pceeyk8s">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="proebdcw">
+      <td class="name-cell">Ramesh Yadav</td>
+      <td>60</td>
+      <td class="village-cell">Ambala City</td>
+      <td><span class="badge med">55</span></td>
+      <td><span class="badge stage">Diagnosed</span></td>
+      <td>31 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="proebdcw">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pehonwj0">
+      <td class="name-cell">Vinod Kumar</td>
+      <td>57</td>
+      <td class="village-cell">Panchkula</td>
+      <td><span class="badge med">64</span></td>
+      <td><span class="badge stage">Biopsy</span></td>
+      <td>29 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pehonwj0">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pt7tqdvu">
+      <td class="name-cell">Suresh Singh</td>
+      <td>44</td>
+      <td class="village-cell">Ambala City</td>
+      <td><span class="badge low">27</span></td>
+      <td><span class="badge stage">Referred</span></td>
+      <td>25 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pt7tqdvu">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pqqas30w">
+      <td class="name-cell">Sarita Verma</td>
+      <td>49</td>
+      <td class="village-cell">Karnal</td>
+      <td><span class="badge high">85</span></td>
+      <td><span class="badge stage">Follow-up</span></td>
+      <td>24 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pqqas30w">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="p8gphkc2">
+      <td class="name-cell">Manju Sharma</td>
+      <td>68</td>
+      <td class="village-cell">Panchkula</td>
+      <td><span class="badge high">93</span></td>
+      <td><span class="badge stage">Diagnosed</span></td>
+      <td>24 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="p8gphkc2">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pvhkrfua">
+      <td class="name-cell">Geeta Kumari</td>
+      <td>69</td>
+      <td class="village-cell">Panchkula</td>
+      <td><span class="badge low">24</span></td>
+      <td><span class="badge stage">Referred</span></td>
+      <td>23 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pvhkrfua">Remind</button></td>
+    </tr><tr class="row-clickable" data-id="pou6kqs7">
+      <td class="name-cell">Rekha Devi</td>
+      <td>40</td>
+      <td class="village-cell">Ambala City</td>
+      <td><span class="badge high">83</span></td>
+      <td><span class="badge stage">Hospital Visit</span></td>
+      <td>22 Aug</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="pou6kqs7">Remind</button></td>
+    </tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CLINICAL -->
+      <section class="panel" id="panel-clinical">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Referrals &amp; clinical pathway</h1>
+            <p class="page-desc">Drag a patient card to update their stage in the hospital pathway.</p>
+          </div>
+          <button class="btn btn-ghost" id="calendarToggleBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="17" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+            Upcoming appointments
+          </button>
+        </div>
+        <div class="kanban" id="kanban">
+    <div class="kcol" data-idx="1">
+      <div class="kcol-head"><span>Referred</span><span id="kcount-0">2</span></div>
+      <div class="kdrop" data-idx="1">
+      <div class="kcard" draggable="true" data-id="p5nt4dqw">
+        <b>Kiran Rani</b>Kaithal · <span class="badge low" style="margin-top:4px;display:inline-flex;">9</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pimdy8cf">
+        <b>Deepak Singh</b>Yamunanagar · <span class="badge med" style="margin-top:4px;display:inline-flex;">54</span>
+      </div></div>
+    </div>
+    <div class="kcol" data-idx="2">
+      <div class="kcol-head"><span>Scheduled</span><span id="kcount-1">3</span></div>
+      <div class="kdrop" data-idx="2">
+      <div class="kcard" draggable="true" data-id="pvhkrfua">
+        <b>Geeta Kumari</b>Panchkula · <span class="badge low" style="margin-top:4px;display:inline-flex;">24</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pt7tqdvu">
+        <b>Suresh Singh</b>Ambala City · <span class="badge low" style="margin-top:4px;display:inline-flex;">27</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pkm7yjte">
+        <b>Mahesh Sharma</b>Kaithal · <span class="badge med" style="margin-top:4px;display:inline-flex;">69</span>
+      </div></div>
+    </div>
+    <div class="kcol" data-idx="3">
+      <div class="kcol-head"><span>Hospital Visit</span><span id="kcount-2">1</span></div>
+      <div class="kdrop" data-idx="3">
+      <div class="kcard" draggable="true" data-id="pou6kqs7">
+        <b>Rekha Devi</b>Ambala City · <span class="badge high" style="margin-top:4px;display:inline-flex;">83</span>
+      </div></div>
+    </div>
+    <div class="kcol" data-idx="4">
+      <div class="kcol-head"><span>Biopsy</span><span id="kcount-3">4</span></div>
+      <div class="kdrop" data-idx="4">
+      <div class="kcard" draggable="true" data-id="pytk50xt">
+        <b>Suman Kumar</b>Kaithal · <span class="badge low" style="margin-top:4px;display:inline-flex;">13</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pbo70xgo">
+        <b>Kavita Yadav</b>Karnal · <span class="badge med" style="margin-top:4px;display:inline-flex;">48</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="p0d72lyk">
+        <b>Om Prakash Devi</b>Yamunanagar · <span class="badge med" style="margin-top:4px;display:inline-flex;">57</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pehonwj0">
+        <b>Vinod Kumar</b>Panchkula · <span class="badge med" style="margin-top:4px;display:inline-flex;">64</span>
+      </div></div>
+    </div>
+    <div class="kcol" data-idx="5">
+      <div class="kcol-head"><span>Diagnosed</span><span id="kcount-4">2</span></div>
+      <div class="kdrop" data-idx="5">
+      <div class="kcard" draggable="true" data-id="proebdcw">
+        <b>Ramesh Yadav</b>Ambala City · <span class="badge med" style="margin-top:4px;display:inline-flex;">55</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="p8gphkc2">
+        <b>Manju Sharma</b>Panchkula · <span class="badge high" style="margin-top:4px;display:inline-flex;">93</span>
+      </div></div>
+    </div>
+    <div class="kcol" data-idx="6">
+      <div class="kcol-head"><span>Follow-up</span><span id="kcount-5">2</span></div>
+      <div class="kdrop" data-idx="6">
+      <div class="kcard" draggable="true" data-id="pfzubbj3">
+        <b>Rajesh Rani</b>Kurukshetra · <span class="badge med" style="margin-top:4px;display:inline-flex;">52</span>
+      </div>
+      <div class="kcard" draggable="true" data-id="pqqas30w">
+        <b>Sarita Verma</b>Karnal · <span class="badge high" style="margin-top:4px;display:inline-flex;">85</span>
+      </div></div>
+    </div></div>
+
+        <div class="card" style="margin-top:18px;" id="apptCard">
+          <h3>Upcoming appointments</h3>
+          <p class="card-sub">Next scheduled hospital visits and biopsy dates</p>
+          <div id="apptList" class="feed">
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Rekha Devi</b> — Biopsy appointment</div>
+      <div class="feed-time">Tue, 22 Sept · Ambala City PHC</div></div>
+    </div>
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Suman Kumar</b> — Diagnosed appointment</div>
+      <div class="feed-time">Thu, 24 Sept · Kaithal PHC</div></div>
+    </div>
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Geeta Kumari</b> — Hospital Visit appointment</div>
+      <div class="feed-time">Sat, 26 Sept · Panchkula PHC</div></div>
+    </div>
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Kavita Yadav</b> — Diagnosed appointment</div>
+      <div class="feed-time">Mon, 28 Sept · Karnal PHC</div></div>
+    </div>
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Suresh Singh</b> — Hospital Visit appointment</div>
+      <div class="feed-time">Wed, 30 Sept · Ambala City PHC</div></div>
+    </div>
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>Mahesh Sharma</b> — Hospital Visit appointment</div>
+      <div class="feed-time">Fri, 02 Oct · Kaithal PHC</div></div>
+    </div></div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="panel" id="panel-analytics">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Analytics</h1>
+            <p class="page-desc">Program-level trends across screening, referral and follow-up.</p>
+          </div>
+          <button class="btn btn-ghost" id="customizeBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>
+            Customize widgets
+          </button>
+        </div>
+        <div class="chart-grid">
+          <div class="card chart-card"><h3>Screenings over time</h3><p class="card-sub">Last 8 weeks, community-wide</p><canvas id="chartTrend"></canvas></div>
+          <div class="card chart-card"><h3>Referral completion</h3><p class="card-sub">Of all patients referred to a facility</p><canvas id="chartDonut"></canvas></div>
+          <div class="card chart-card"><h3>Drop-off by stage</h3><p class="card-sub">Where patients disengage from the pathway</p><canvas id="chartDropoff"></canvas></div>
+          <div class="card chart-card"><h3>Time to evaluation</h3><p class="card-sub">Days between screening and clinical assessment</p><canvas id="chartHist"></canvas></div>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <h3>Screening density by village</h3>
+          <p class="card-sub">Relative volume of community screenings (mock geographic view)</p>
+          <div class="heatmap" id="heatmap"></div>
+        </div>
+      </section>
+
+      <!-- RESEARCH -->
+      <section class="panel" id="panel-research">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Molecular &amp; research layer</h1>
+            <p class="page-desc">Long-term view connecting field signal, clinical data and molecular data for personalized oncology research.</p>
+          </div>
+          <button class="btn btn-ghost" id="exportResearchBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 3v12m0 0-4-4m4 4 4-4"></path><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+            Export de-identified dataset
+          </button>
+        </div>
+
+        <div class="card">
+          <h3>ONCOmitra architecture</h3>
+          <p class="card-sub">Community, clinical and molecular layers converging through a single AI engine</p>
+          <div class="arch">
+            <div class="arch-node">ONCOmitra</div>
+            <div class="arch-line"></div>
+            <div class="arch-row">
+              <div class="arch-leaf"><b>Community</b><span>Mobile AI screening, ASHA intake</span></div>
+              <div class="arch-leaf"><b>Clinical</b><span>Patient EHR, referral, biopsy</span></div>
+              <div class="arch-leaf"><b>Molecular</b><span>Genomics, transcriptomics, proteomics</span></div>
+            </div>
+            <div class="arch-line"></div>
+            <div class="arch-node" style="background:var(--accent);">AI engine — risk &amp; pattern analysis</div>
+            <div class="arch-line"></div>
+            <div class="arch-node">Care-team dashboard → continuous care</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <h3>Biomarker panel (research cohort)</h3>
+            <p class="card-sub">Illustrative molecular markers linked to de-identified clinical phenotypes</p>
+            <select class="select-pill" id="cohortFilter" style="margin-bottom:12px;">
+              <option value="all">All cohorts</option>
+              <option value="high">High-risk cohort</option>
+              <option value="diagnosed">Confirmed diagnosis cohort</option>
+            </select>
+            <table style="font-size:12.5px;">
+              <thead><tr><th>Sample ID</th><th>Marker</th><th>Expression</th><th>Phenotype link</th></tr></thead>
+              <tbody id="biomarkerBody"><tr><td>SMP-1000</td><td>TP53</td><td>2.9×</td><td>high risk / Hospital Visit</td></tr><tr><td>SMP-1001</td><td>CDKN2A</td><td>4.5×</td><td>low risk / Biopsy</td></tr><tr><td>SMP-1002</td><td>PIK3CA</td><td>4.9×</td><td>med risk / Screened</td></tr><tr><td>SMP-1003</td><td>NOTCH1</td><td>1.3×</td><td>low risk / Referred</td></tr><tr><td>SMP-1004</td><td>EGFR</td><td>1.4×</td><td>med risk / Biopsy</td></tr><tr><td>SMP-1005</td><td>CASP8</td><td>4.2×</td><td>med risk / Follow-up</td></tr><tr><td>SMP-1006</td><td>TP53</td><td>4.0×</td><td>low risk / Referred</td></tr><tr><td>SMP-1007</td><td>CDKN2A</td><td>2.2×</td><td>med risk / Referred</td></tr></tbody>
+            </table>
+          </div>
+          <div class="card chart-card">
+            <h3>Risk score vs. biomarker signal</h3>
+            <p class="card-sub">Correlation view across the research cohort</p>
+            <canvas id="chartScatter"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="panel" id="panel-settings">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Settings</h1>
+            <p class="page-desc">Preferences, access control, privacy and feedback.</p>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div class="card">
+            <h3>Preferences</h3>
+            <div class="pref-row">Dark theme
+              <label class="switch"><input type="checkbox" id="prefTheme"><span class="slider"></span></label>
+            </div>
+            <div class="pref-row">Hindi interface
+              <label class="switch"><input type="checkbox" id="prefLang"><span class="slider"></span></label>
+            </div>
+            <div class="pref-row">SMS reminders to patients
+              <label class="switch"><input type="checkbox" checked=""><span class="slider"></span></label>
+            </div>
+            <div class="pref-row">WhatsApp reminders to patients
+              <label class="switch"><input type="checkbox" checked=""><span class="slider"></span></label>
+            </div>
+            <div class="pref-row">Email weekly summary to clinicians
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Access &amp; privacy</h3>
+            <div class="pref-row">Role-based access control<span class="badge low">Enabled</span></div>
+            <div class="pref-row">Patient data encryption at rest<span class="badge low">Enabled</span></div>
+            <div class="pref-row">Consent required before screening<span class="badge low">Enabled</span></div>
+            <div class="pref-row">De-identification for research export<span class="badge low">Enabled</span></div>
+            <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">Current view: <b id="currentRoleLabel">ASHA worker</b> — access is scoped to this role's permissions.</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <h3>Audit log</h3>
+            <p class="card-sub">System-wide activity trail</p>
+            <div class="feed" id="auditLog">
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Sunita Devi</b> completed a screening in Kaithal</div><div class="feed-time">12 minutes ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Dr. Rao</b> confirmed biopsy for Anita Kumari</div><div class="feed-time">1 hour ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text">System flagged <b>3 patients</b> with no follow-up in 14 days</div><div class="feed-time">3 hours ago</div></div></div>
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text"><b>Radha Kumari</b> synced 5 offline records</div><div class="feed-time">Yesterday</div></div></div></div>
+          </div>
+          <div class="card">
+            <h3>Feedback</h3>
+            <p class="card-sub">Tell us what would make this more useful in the field</p>
+            <div class="field"><textarea id="feedbackText" placeholder="Share feedback about this prototype…"></textarea></div>
+            <button class="btn btn-primary btn-sm" id="submitFeedbackBtn" style="margin-top:10px;">Submit feedback</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="patientModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 style="font-family:var(--font-head);margin:0 0 4px;font-size:19px;" id="modalName">—</h3>
+        <div class="tag-row" id="modalBadges"></div>
+      </div>
+      <button class="modal-close" id="modalCloseBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="margin-bottom:16px;">
+        <div class="field"><label>Village</label><div id="modalVillage"></div></div>
+        <div class="field"><label>ASHA worker</label><div id="modalAsha"></div></div>
+        <div class="field"><label>Age / Gender</label><div id="modalAgeGender"></div></div>
+        <div class="field"><label>Habit history</label><div id="modalHabit"></div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm" id="modalReminderBtn">Send WhatsApp reminder</button>
+        <button class="btn btn-ghost btn-sm" id="modalPrintBtn">Print / export report</button>
+        <button class="btn btn-ghost btn-sm" id="modalQrBtn">Show patient QR ID</button>
+      </div>
+      <div id="modalQr" style="display:none;margin-bottom:16px;">
+        <div style="width:96px;height:96px;background:repeating-conic-gradient(var(--ink) 0% 25%, var(--surface) 0% 50%) 0 0/16px 16px;border-radius:6px;border:1px solid var(--border);"></div>
+      </div>
+      <h3 style="font-size:14.5px;margin-bottom:2px;">Patient journey</h3>
+      <div class="timeline" id="modalTimeline"></div>
+      <h3 style="font-size:14.5px;margin:18px 0 2px;">Clinician notes</h3>
+      <div id="modalNotes" style="font-size:13px;color:var(--ink-soft);margin-bottom:8px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="modalNoteInput" placeholder="Add a note…" style="flex:1;border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:13px;background:var(--surface);color:var(--ink);">
+        <button class="btn btn-primary btn-sm" id="modalAddNoteBtn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ---------------------------------------------------------------
+   ONCOmitra prototype — in-memory demo state (no backend, no storage)
+---------------------------------------------------------------- */
+const VILLAGES = ["Ambala City","Kaithal","Yamunanagar","Panchkula","Karnal","Kurukshetra"];
+const ASHAS = ["Sunita Devi","Radha Kumari","Meena Sharma","Pooja Yadav"];
+const STAGES = ["Screened","Risk Flagged","Referred","Hospital Visit","Biopsy","Diagnosed","Follow-up"];
+const KANBAN_STAGES = ["Referred","Scheduled","Hospital Visit","Biopsy","Diagnosed","Follow-up"];
+const SYMPTOMS = ["White/red patch","Non-healing ulcer (>2wks)","Difficulty chewing","Restricted mouth opening","Pain while swallowing","Lump in neck/mouth"];
+const FIRST = ["Rekha","Suman","Anita","Geeta","Kavita","Rajesh","Suresh","Mahesh","Om Prakash","Vinod","Sarita","Poonam","Ramesh","Kiran","Deepak","Manju"];
+const LAST = ["Devi","Kumari","Singh","Kumar","Yadav","Sharma","Verma","Rani"];
+
+function riskLevel(score){ return score>=70?"high":score>=40?"med":"low"; }
+function fmtDate(d){ return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}); }
+function daysAgo(n){ const d=new Date(); d.setDate(d.getDate()-n); return d; }
+function uid(){ return 'p'+Math.random().toString(36).slice(2,9); }
+
+let patients = [];
+(function seed(){
+  for(let i=0;i<16;i++){
+    const score = Math.floor(Math.random()*90)+8;
+    const stageIdx = Math.min(Math.floor(Math.random()*7), 6);
+    patients.push({
+      id: uid(),
+      name: FIRST[i%FIRST.length]+" "+LAST[(i*3)%LAST.length],
+      age: 28 + Math.floor(Math.random()*45),
+      gender: Math.random()>0.35?"Female":"Male",
+      village: VILLAGES[i%VILLAGES.length],
+      asha: ASHAS[i%ASHAS.length],
+      risk: score,
+      habit: ["None","Smokeless tobacco","Smoked tobacco","Areca nut","Both"][Math.floor(Math.random()*5)],
+      stageIdx,
+      updated: daysAgo(Math.floor(Math.random()*30)),
+      notes: stageIdx>2 ? ["Initial hospital exam completed, biopsy advised."] : [],
+      symptoms: SYMPTOMS.filter(()=>Math.random()>0.6)
+    });
+  }
+})();
+
+let state = { role:'clinician', theme:'dark', lang:'en', activeModal:null, riskFilter:'all', stageFilter:'all', sortKey:'updated', sortDir:'desc' };
+
+let auditLog = [
+  {text:"<b>Sunita Devi</b> completed a screening in Kaithal", time:"12 minutes ago"},
+  {text:"<b>Dr. Rao</b> confirmed biopsy for Anita Kumari", time:"1 hour ago"},
+  {text:"System flagged <b>3 patients</b> with no follow-up in 14 days", time:"3 hours ago"},
+  {text:"<b>Radha Kumari</b> synced 5 offline records", time:"Yesterday"},
+];
+
+/* ---------------- Toasts ---------------- */
+function toast(msg){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className='toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, 2800);
+}
+
+/* ---------------- Demo login ---------------- */
+document.getElementById('loginForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const id = document.getElementById('loginId').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const error = document.getElementById('loginError');
+  if(!id || !password){ error.textContent = 'Enter your worker ID and password to continue.'; return; }
+  error.textContent = '';
+  const role = document.getElementById('loginRole').value;
+  const roleSwitch = document.getElementById('roleSwitch');
+  roleSwitch.value = role;
+  roleSwitch.dispatchEvent(new Event('change'));
+  document.getElementById('loginScreen').style.display = 'none';
+  toast(`Signed in as ${id}`);
+});
+document.getElementById('forgotPasswordBtn').addEventListener('click', ()=>{
+  toast('For this demo, use any worker ID and password to sign in.');
+});
+
+/* ---------------- Nav / tabs ---------------- */
+document.getElementById('nav').addEventListener('click', e=>{
+  const btn = e.target.closest('.nav-item');
+  if(!btn) return;
+  activateTab(btn.dataset.tab);
+});
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.goto)));
+function activateTab(tab){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+tab));
+  if(tab==='analytics') setTimeout(renderCharts, 30);
+}
+
+/* ---------------- Theme / role / lang ---------------- */
+function setTheme(dark){
+  state.theme = dark?'dark':'light';
+  document.body.setAttribute('data-theme', state.theme);
+  document.getElementById('prefTheme').checked = dark;
+}
+document.getElementById('themeToggle').addEventListener('click', ()=> setTheme(state.theme==='light'));
+document.getElementById('prefTheme').addEventListener('change', e=> setTheme(e.target.checked));
+
+document.getElementById('roleSwitch').addEventListener('change', e=>{
+  state.role = e.target.value;
+  const labels = {admin:'Admin',asha:'ASHA worker',clinician:'Clinician',researcher:'Researcher'};
+  document.getElementById('currentRoleLabel').textContent = labels[state.role];
+  toast('Switched to '+labels[state.role]+' view');
+});
+document.getElementById('langSwitch').addEventListener('change', e=>{
+  const hindi = e.target.value==='hi';
+  document.getElementById('prefLang').checked = hindi;
+  document.getElementById('voiceLabel').textContent = hindi? 'वॉइस इनटेक (हिंदी)':'Voice intake (Hindi)';
+  toast(hindi? 'भाषा हिंदी में बदली गई' : 'Language set to English');
+});
+document.getElementById('prefLang').addEventListener('change', e=>{
+  document.getElementById('langSwitch').value = e.target.checked?'hi':'en';
+  document.getElementById('langSwitch').dispatchEvent(new Event('change'));
+});
+
+document.getElementById('dismissBanner').addEventListener('click', e=> e.target.closest('.banner').style.display='none');
+
+document.getElementById('notifBtn').addEventListener('click', ()=>{
+  document.getElementById('notifDot').style.display='none';
+  toast('3 patients need follow-up · 1 biopsy result ready');
+});
+document.getElementById('helpBtn').addEventListener('click', ()=> toast('Tip: click any patient row to open their full journey.'));
+document.getElementById('profileBtn').addEventListener('click', ()=> activateTab('settings') || document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.tab==='settings')));
+
+/* ---------------- Global search ---------------- */
+document.getElementById('globalSearch').addEventListener('input', e=>{
+  const q = e.target.value.trim();
+  if(q.length>1){ activateTab('records'); document.getElementById('tableSearch').value=q; renderTable(); }
+});
+
+/* ---------------- Overview ---------------- */
+function renderKpis(){
+  const total = patients.length;
+  const referred = patients.filter(p=>p.stageIdx>=2).length;
+  const dropoff = patients.filter(p=>p.stageIdx===2 && (new Date()-p.updated)/86400000>10).length;
+  const biopsy = patients.filter(p=>p.stageIdx>=4).length;
+  const followup = patients.filter(p=>p.stageIdx===6).length;
+  const avgDays = 6;
+  const kpis = [
+    {label:"Screening coverage", value: total, trend:"+12% this month", up:true},
+    {label:"Referral completion", value: Math.round(referred/total*100)+"%", trend:"+4% vs last month", up:true},
+    {label:"Drop-off rate", value: Math.round(dropoff/total*100)+"%", trend:"-3% vs last month", up:true},
+    {label:"Time to evaluation", value: avgDays+" days", trend:"-1.2 days", up:true},
+    {label:"Biopsy completion", value: Math.round(biopsy/Math.max(referred,1)*100)+"%", trend:"+6% vs last month", up:true},
+    {label:"Follow-up continuity", value: Math.round(followup/total*100)+"%", trend:"-2% vs last month", up:false},
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k=>`
+    <div class="kpi-card">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-trend ${k.up?'trend-up':'trend-down'}">${k.trend}</div>
+    </div>`).join('');
+}
+function renderFunnel(){
+  const counts = STAGES.map((s,i)=> patients.filter(p=>p.stageIdx>=i).length);
+  const max = counts[0]||1;
+  document.getElementById('funnel').innerHTML = STAGES.map((s,i)=>`
+    <div class="funnel-row">
+      <div>${s}</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${(counts[i]/max*100)}%;"></div></div>
+      <div class="funnel-count">${counts[i]}</div>
+    </div>`).join('');
+}
+function renderFeed(){
+  document.getElementById('activityFeed').innerHTML = auditLog.slice(0,5).map(a=>`
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text">${a.text}</div><div class="feed-time">${a.time}</div></div></div>`).join('');
+  document.getElementById('auditLog').innerHTML = auditLog.map(a=>`
+    <div class="feed-item"><div class="feed-dot"></div><div><div class="feed-text">${a.text}</div><div class="feed-time">${a.time}</div></div></div>`).join('');
+}
+document.getElementById('exportOverviewBtn').addEventListener('click', ()=> toast('Program report exported as PDF (demo)'));
+
+/* ---------------- Screening form ---------------- */
+function populateSelect(id, arr){
+  document.getElementById(id).innerHTML = arr.map(v=>`<option>${v}</option>`).join('');
+}
+populateSelect('f_village', VILLAGES);
+populateSelect('f_asha', ASHAS);
+document.getElementById('symptomChecklist').innerHTML = SYMPTOMS.map((s,i)=>`
+  <label class="chk"><input type="checkbox" value="${s}" ${i<2?'checked':''}> ${s}</label>`).join('');
+
+let voiceOn = false;
+document.getElementById('voiceBtn').addEventListener('click', function(){
+  voiceOn = !voiceOn;
+  this.classList.toggle('listening', voiceOn);
+  document.getElementById('voiceLabel').textContent = voiceOn ? 'Listening…' : (state.lang==='hi'?'वॉइस इनटेक (हिंदी)':'Voice intake (Hindi)');
+  if(voiceOn) setTimeout(()=>{ this.classList.remove('listening'); voiceOn=false; document.getElementById('voiceLabel').textContent = state.lang==='hi'?'वॉइस इनटेक (हिंदी)':'Voice intake (Hindi)'; toast('Voice note attached to record'); }, 1800);
+});
+
+let geotagged = false;
+let uploadedLesionUrl = '';
+document.getElementById('geotagBtn').addEventListener('click', ()=>{
+  geotagged = true;
+  document.getElementById('geotagLabel').textContent = "29.94° N, 76.83° E · captured";
+  toast('Location captured for this screening');
+});
+
+document.getElementById('uploadBox').addEventListener('click', ()=> document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  uploadedLesionUrl = url;
+  const box = document.getElementById('uploadBox');
+  box.classList.add('has-img');
+  box.innerHTML = `<img src="${url}"><input type="file" id="fileInput2" style="display:none;">`;
+});
+
+document.getElementById('clearFormBtn').addEventListener('click', ()=>{
+  document.getElementById('f_name').value='';
+  document.getElementById('f_age').value='';
+  document.getElementById('f_notes').value='';
+  document.getElementById('triageResult').classList.remove('show');
+});
+
+let lastTriage = null;
+document.getElementById('runTriageBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('f_name').value.trim() || 'Unnamed patient';
+  const checked = Array.from(document.querySelectorAll('#symptomChecklist input:checked')).length;
+  const habit = document.getElementById('f_habit').value;
+  const duration = document.getElementById('f_duration').value;
+  const symptomPoints = checked * 7;
+  const habitPoints = (habit.includes('Regular')||habit==='Both') ? 18 : habit==='Occasional' ? 7 : 0;
+  const durationPoints = duration.includes('3+') ? 14 : duration.includes('1–3') ? 7 : duration.includes('2–4') ? 3 : 0;
+  const agePoints = Math.max(0, Math.min(8, Math.floor((Number(document.getElementById('f_age').value)||40 - 35) / 5)));
+  const basePoints = 10;
+  const score = basePoints + symptomPoints + habitPoints + durationPoints + agePoints;
+  const level = riskLevel(score);
+  lastTriage = {name, score, level, checked, habit, duration, symptomPoints, habitPoints, durationPoints, agePoints, basePoints};
+
+  const ring = document.getElementById('riskRing');
+  const colors = {high:'var(--risk-high)',med:'var(--risk-med)',low:'var(--risk-low)'};
+  const bgs = {high:'var(--risk-high-bg)',med:'var(--risk-med-bg)',low:'var(--risk-low-bg)'};
+  ring.style.background = bgs[level]; ring.style.color = colors[level];
+  ring.textContent = score;
+  document.getElementById('riskHeadline').textContent = {high:'High-priority — suspicious findings',med:'Moderate priority — clinical review advised',low:'Low priority — routine monitoring'}[level];
+  document.getElementById('riskConfidence').textContent = `Screening score · based on ${checked} symptom marker(s), habit, duration and age`;
+  document.getElementById('riskBadgeLarge').className = 'badge '+level;
+  document.getElementById('riskBadgeLarge').textContent = level==='high'?'High risk':level==='med'?'Medium risk':'Low risk';
+  document.getElementById('riskRecommendation').textContent = {
+    high:'Recommend urgent referral to nearest hospital for clinical examination and biopsy within 7 days.',
+    med:'Recommend referral for clinical evaluation within 2–3 weeks; re-screen if symptoms persist.',
+    low:'Advise self-monitoring and re-screening at next community visit in 60 days.'
+  }[level];
+  const contributions = [
+    ['Symptoms', symptomPoints, checked ? 'alert' : ''],
+    ['Tobacco / areca', habitPoints, habitPoints ? 'alert' : ''],
+    ['Symptom duration', durationPoints, durationPoints ? 'alert' : ''],
+    ['Age', agePoints, ''],
+    ['Screening baseline', basePoints, '']
+  ];
+  document.getElementById('contributionBars').innerHTML = contributions.map(([label, points, tone]) => `
+    <div class="contribution-row ${tone}">
+      <span class="contribution-label">${label}</span>
+      <span class="contribution-track"><span class="contribution-bar" style="width:${Math.max(3, points / 25 * 100)}%"></span></span>
+      <span class="contribution-value">+${points}</span>
+    </div>`).join('');
+  const heatmap = document.getElementById('lesionHeatmap');
+  heatmap.classList.toggle('has-photo', Boolean(uploadedLesionUrl));
+  heatmap.style.backgroundImage = uploadedLesionUrl ? `url("${uploadedLesionUrl}")` : '';
+  const hotspot = document.getElementById('lesionHotspot');
+  hotspot.style.left = `${38 + (checked * 7) % 28}%`;
+  hotspot.style.top = `${27 + (durationPoints ? 15 : 5)}%`;
+  document.getElementById('triageResult').classList.add('show');
+});
+
+document.getElementById('createReferralBtn').addEventListener('click', ()=>{
+  if(!lastTriage) return;
+  patients.unshift({
+    id: uid(), name: lastTriage.name, age: Number(document.getElementById('f_age').value)||40,
+    gender: document.getElementById('f_gender').value, village: document.getElementById('f_village').value,
+    asha: document.getElementById('f_asha').value, risk: lastTriage.score,
+    habit: document.getElementById('f_habit').value, stageIdx: 2, updated: new Date(),
+    notes: [], symptoms: Array.from(document.querySelectorAll('#symptomChecklist input:checked')).map(c=>c.value)
+  });
+  auditLog.unshift({text:`<b>${lastTriage.name}</b> screened and referred (${lastTriage.level} risk)`, time:"Just now"});
+  toast(`${lastTriage.name} added to patient record — referral generated`);
+  renderAll();
+  document.getElementById('clearFormBtn').click();
+});
+
+document.getElementById('downloadTriageBtn').addEventListener('click', ()=>{
+  if(!lastTriage) return;
+  const t = lastTriage;
+  const riskName = t.level==='high' ? 'High risk' : t.level==='med' ? 'Medium risk' : 'Low risk';
+  const symptoms = Array.from(document.querySelectorAll('#symptomChecklist input:checked')).map(c=>c.value).join(', ') || 'None reported';
+  const report = [
+    'ONCOmitra — Oral screening report',
+    `Generated: ${new Date().toLocaleString('en-IN')}`,
+    '',
+    `Patient: ${t.name}`,
+    `Screening score: ${t.score}/100 (${riskName})`,
+    `Symptoms selected: ${symptoms}`,
+    `Tobacco / areca use: ${t.habit}`,
+    `Symptom duration: ${t.duration}`,
+    '',
+    'Score contribution breakdown',
+    `Symptoms: +${t.symptomPoints}`,
+    `Tobacco / areca exposure: +${t.habitPoints}`,
+    `Symptom duration: +${t.durationPoints}`,
+    `Age: +${t.agePoints}`,
+    `Screening baseline: +${t.basePoints}`,
+    '',
+    `Recommendation: ${document.getElementById('riskRecommendation').textContent}`,
+    '',
+    'This is a screening-support report, not a diagnosis. Final evaluation requires clinical examination.'
+  ].join('\n');
+  const blob = new Blob([report], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `oncomitra-screening-${t.name.replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase() || 'report'}.txt`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
+  toast('Screening report downloaded');
+});
+
+/* ---------------- Patient table ---------------- */
+document.getElementById('stageFilter').innerHTML = '<option value="all">All stages</option>'+STAGES.map(s=>`<option>${s}</option>`).join('');
+document.querySelectorAll('#riskFilterTags .tag').forEach(t=>t.addEventListener('click', function(){
+  document.querySelectorAll('#riskFilterTags .tag').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active'); state.riskFilter=this.dataset.risk; renderTable();
+}));
+document.getElementById('stageFilter').addEventListener('change', e=>{ state.stageFilter=e.target.value; renderTable(); });
+document.getElementById('tableSearch').addEventListener('input', renderTable);
+document.querySelectorAll('th[data-sort]').forEach(th=>th.addEventListener('click', ()=>{
+  const key = th.dataset.sort;
+  if(state.sortKey===key) state.sortDir = state.sortDir==='asc'?'desc':'asc'; else { state.sortKey=key; state.sortDir='asc'; }
+  renderTable();
+}));
+
+function renderTable(){
+  const q = (document.getElementById('tableSearch').value||'').toLowerCase();
+  let rows = patients.filter(p=>{
+    if(state.riskFilter!=='all' && riskLevel(p.risk)!==state.riskFilter) return false;
+    if(state.stageFilter!=='all' && STAGES[p.stageIdx]!==state.stageFilter) return false;
+    if(q && !(p.name.toLowerCase().includes(q) || p.village.toLowerCase().includes(q))) return false;
+    return true;
+  });
+  const key = state.sortKey, dir = state.sortDir==='asc'?1:-1;
+  rows.sort((a,b)=>{
+    let av,bv;
+    if(key==='name'){av=a.name;bv=b.name;}
+    else if(key==='age'){av=a.age;bv=b.age;}
+    else if(key==='village'){av=a.village;bv=b.village;}
+    else if(key==='risk'){av=a.risk;bv=b.risk;}
+    else if(key==='stage'){av=a.stageIdx;bv=b.stageIdx;}
+    else {av=a.updated;bv=b.updated;}
+    return av>bv?dir:av<bv?-dir:0;
+  });
+  document.getElementById('patientTableBody').innerHTML = rows.map(p=>{
+    const lvl = riskLevel(p.risk);
+    return `<tr class="row-clickable" data-id="${p.id}">
+      <td class="name-cell">${p.name}</td>
+      <td>${p.age}</td>
+      <td class="village-cell">${p.village}</td>
+      <td><span class="badge ${lvl}">${p.risk}</span></td>
+      <td><span class="badge stage">${STAGES[p.stageIdx]}</span></td>
+      <td>${fmtDate(p.updated)}</td>
+      <td><button class="btn btn-ghost btn-sm reminder-btn" data-id="${p.id}">Remind</button></td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="7"><div class="empty-state">No patients match these filters yet.</div></td></tr>`;
+}
+document.getElementById('patientTableBody').addEventListener('click', e=>{
+  const remindBtn = e.target.closest('.reminder-btn');
+  if(remindBtn){ e.stopPropagation(); const p=patients.find(x=>x.id===remindBtn.dataset.id); toast(`WhatsApp reminder sent to ${p.name}`); return; }
+  const row = e.target.closest('tr[data-id]');
+  if(row) openPatientModal(row.dataset.id);
+});
+document.getElementById('exportCsvBtn').addEventListener('click', ()=>{
+  const header = "Name,Age,Gender,Village,ASHA,Risk,Stage,LastUpdate\n";
+  const rows = patients.map(p=>[p.name,p.age,p.gender,p.village,p.asha,p.risk,STAGES[p.stageIdx],p.updated.toISOString().slice(0,10)].join(",")).join("\n");
+  const blob = new Blob([header+rows], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='oncomitra_patients.csv'; a.click();
+  toast('CSV exported');
+});
+
+/* ---------------- Patient modal ---------------- */
+function openPatientModal(id){
+  const p = patients.find(x=>x.id===id);
+  if(!p) return;
+  state.activeModal = id;
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalBadges').innerHTML = `<span class="badge ${riskLevel(p.risk)}">${p.risk} risk</span><span class="badge stage">${STAGES[p.stageIdx]}</span>`;
+  document.getElementById('modalVillage').textContent = p.village;
+  document.getElementById('modalAsha').textContent = p.asha;
+  document.getElementById('modalAgeGender').textContent = `${p.age} yrs · ${p.gender}`;
+  document.getElementById('modalHabit').textContent = p.habit;
+  document.getElementById('modalQr').style.display='none';
+
+  document.getElementById('modalTimeline').innerHTML = STAGES.map((s,i)=>{
+    const done = i<=p.stageIdx;
+    return `<div class="tl-item ${done?'':'pending'}">
+      ${i<STAGES.length-1?'<div class="tl-line"></div>':''}
+      <div class="tl-marker"></div>
+      <div class="tl-content"><b>${s}</b><p>${done? (i===0? 'Completed by '+p.asha+' · '+fmtDate(p.updated) : 'Completed') : 'Pending'}</p></div>
+    </div>`;
+  }).join('');
+
+  renderModalNotes(p);
+  document.getElementById('patientModalOverlay').classList.add('show');
+}
+function renderModalNotes(p){
+  document.getElementById('modalNotes').innerHTML = p.notes.length? p.notes.map(n=>`<div style="padding:6px 0;border-bottom:1px solid var(--border);">${n}</div>`).join('') : 'No notes yet.';
+}
+document.getElementById('modalCloseBtn').addEventListener('click', ()=> document.getElementById('patientModalOverlay').classList.remove('show'));
+document.getElementById('patientModalOverlay').addEventListener('click', e=>{ if(e.target.id==='patientModalOverlay') e.currentTarget.classList.remove('show'); });
+document.getElementById('modalReminderBtn').addEventListener('click', ()=>{ const p=patients.find(x=>x.id===state.activeModal); toast(`WhatsApp reminder sent to ${p.name}`); });
+document.getElementById('modalPrintBtn').addEventListener('click', ()=> toast('Patient report exported as PDF (demo)'));
+document.getElementById('modalQrBtn').addEventListener('click', ()=>{ const el=document.getElementById('modalQr'); el.style.display = el.style.display==='none'?'block':'none'; });
+document.getElementById('modalAddNoteBtn').addEventListener('click', ()=>{
+  const input = document.getElementById('modalNoteInput');
+  if(!input.value.trim()) return;
+  const p = patients.find(x=>x.id===state.activeModal);
+  p.notes.unshift(input.value.trim());
+  auditLog.unshift({text:`Note added for <b>${p.name}</b>`, time:"Just now"});
+  input.value='';
+  renderModalNotes(p);
+  renderFeed();
+});
+
+/* ---------------- Kanban ---------------- */
+function renderKanban(){
+  const kb = document.getElementById('kanban');
+  kb.innerHTML = KANBAN_STAGES.map((stage,ci)=>`
+    <div class="kcol" data-idx="${ci+1}">
+      <div class="kcol-head"><span>${stage}</span><span id="kcount-${ci}"></span></div>
+      <div class="kdrop" data-idx="${ci+1}"></div>
+    </div>`).join('');
+  KANBAN_STAGES.forEach((stage,ci)=>{
+    const list = patients.filter(p=>p.stageIdx===ci+1);
+    document.getElementById('kcount-'+ci).textContent = list.length;
+    const dropzone = kb.querySelector(`.kdrop[data-idx="${ci+1}"]`);
+    dropzone.innerHTML = list.map(p=>`
+      <div class="kcard" draggable="true" data-id="${p.id}">
+        <b>${p.name}</b>${p.village} · <span class="badge ${riskLevel(p.risk)}" style="margin-top:4px;display:inline-flex;">${p.risk}</span>
+      </div>`).join('');
+  });
+  kb.querySelectorAll('.kcol').forEach(col=>{
+    col.addEventListener('dragover', e=>{ e.preventDefault(); col.classList.add('dragover'); });
+    col.addEventListener('dragleave', ()=> col.classList.remove('dragover'));
+    col.addEventListener('drop', e=>{
+      e.preventDefault(); col.classList.remove('dragover');
+      const id = e.dataTransfer.getData('text/plain');
+      const p = patients.find(x=>x.id===id);
+      if(p){ p.stageIdx = Number(col.dataset.idx); p.updated=new Date();
+        auditLog.unshift({text:`<b>${p.name}</b> moved to ${STAGES[p.stageIdx]}`, time:"Just now"});
+        renderAll(); toast(`${p.name} → ${STAGES[p.stageIdx]}`);
+      }
+    });
+  });
+  kb.querySelectorAll('.kcard').forEach(card=>{
+    card.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', card.dataset.id); card.classList.add('dragging'); });
+    card.addEventListener('dragend', ()=> card.classList.remove('dragging'));
+    card.addEventListener('click', ()=> openPatientModal(card.dataset.id));
+  });
+}
+function renderAppointments(){
+  const upcoming = patients.filter(p=>p.stageIdx>=2 && p.stageIdx<6).slice(0,6).map((p,i)=>({
+    p, date: new Date(Date.now()+ (i+1)*86400000*2)
+  }));
+  document.getElementById('apptList').innerHTML = upcoming.map(u=>`
+    <div class="feed-item"><div class="feed-dot"></div>
+      <div><div class="feed-text"><b>${u.p.name}</b> — ${STAGES[u.p.stageIdx+1]||'Evaluation'} appointment</div>
+      <div class="feed-time">${u.date.toLocaleDateString('en-IN',{weekday:'short', day:'2-digit', month:'short'})} · ${u.p.village} PHC</div></div>
+    </div>`).join('') || '<div class="empty-state">No upcoming appointments.</div>';
+}
+document.getElementById('calendarToggleBtn').addEventListener('click', ()=> document.getElementById('apptCard').scrollIntoView({behavior:'smooth'}));
+
+/* ---------------- Analytics charts ---------------- */
+let chartRefs = {};
+function renderCharts(){
+  const dark = state.theme==='dark';
+  const gridColor = dark? 'rgba(255,255,255,.08)':'rgba(0,0,0,.06)';
+  const textColor = dark? '#AFC0B7':'#516059';
+  Chart.defaults.color = textColor;
+  Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+
+  const trendLabels = Array.from({length:8}, (_,i)=>`Wk ${i+1}`);
+  const trendData = trendLabels.map(()=> 8+Math.floor(Math.random()*14));
+  mkChart('chartTrend','line',{labels:trendLabels, datasets:[{label:'Screenings', data:trendData, borderColor:'#1F6B57', backgroundColor:'rgba(31,107,87,.15)', tension:.35, fill:true}]}, {scales:{y:{grid:{color:gridColor}},x:{grid:{display:false}}}});
+
+  const referred = patients.filter(p=>p.stageIdx>=2).length;
+  const notReferred = patients.length-referred;
+  mkChart('chartDonut','doughnut',{labels:['Completed referral','Pending / lost'],datasets:[{data:[referred,notReferred], backgroundColor:['#1F6B57','#D9E1DA']}]},{plugins:{legend:{position:'bottom'}}});
+
+  mkChart('chartDropoff','bar',{labels:STAGES.slice(0,5), datasets:[{label:'Patients lost', data:[2,5,7,3,1], backgroundColor:'#B8481F'}]},{scales:{y:{grid:{color:gridColor}},x:{grid:{display:false}}}});
+
+  mkChart('chartHist','bar',{labels:['0-3d','4-7d','8-14d','15-30d','30d+'], datasets:[{label:'Patients', data:[3,7,5,2,1], backgroundColor:'#12463B'}]},{scales:{y:{grid:{color:gridColor}},x:{grid:{display:false}}}});
+
+  const scatterData = patients.map(p=>({x:p.risk, y: Math.round(p.risk*0.7 + Math.random()*20)}));
+  mkChart('chartScatter','scatter',{datasets:[{label:'Sample', data:scatterData, backgroundColor:'#B8481F'}]},{scales:{x:{title:{display:true,text:'AI risk score'},grid:{color:gridColor}},y:{title:{display:true,text:'Biomarker signal (a.u.)'},grid:{color:gridColor}}}});
+
+  renderHeatmap();
+}
+function mkChart(id,type,data,extraOpts){
+  const ctx = document.getElementById(id);
+  if(chartRefs[id]) chartRefs[id].destroy();
+  chartRefs[id] = new Chart(ctx, {type, data, options: Object.assign({responsive:true, maintainAspectRatio:false}, extraOpts||{})});
+}
+function renderHeatmap(){
+  const counts = VILLAGES.map(()=> 10+Math.floor(Math.random()*40));
+  const max = Math.max(...counts);
+  document.getElementById('heatmap').innerHTML = VILLAGES.map((v,i)=>{
+    const intensity = counts[i]/max;
+    const bg = `rgba(18,70,59,${0.3+intensity*0.65})`;
+    return `<div class="heat-cell" style="background:${bg};"><b>${counts[i]}</b>${v}</div>`;
+  }).join('');
+}
+document.getElementById('customizeBtn').addEventListener('click', ()=> toast('Widget layout customization coming soon'));
+
+/* ---------------- Research tab ---------------- */
+const MARKERS = ["TP53","CDKN2A","PIK3CA","NOTCH1","EGFR","CASP8"];
+function renderBiomarkers(){
+  const cohort = document.getElementById('cohortFilter').value;
+  let pool = patients;
+  if(cohort==='high') pool = patients.filter(p=>riskLevel(p.risk)==='high');
+  if(cohort==='diagnosed') pool = patients.filter(p=>p.stageIdx>=5);
+  const rows = pool.slice(0,8).map((p,i)=>{
+    const marker = MARKERS[i%MARKERS.length];
+    const expr = (Math.random()*4+1).toFixed(1);
+    return `<tr><td>SMP-${(1000+i)}</td><td>${marker}</td><td>${expr}×</td><td>${riskLevel(p.risk)} risk / ${STAGES[p.stageIdx]}</td></tr>`;
+  }).join('');
+  document.getElementById('biomarkerBody').innerHTML = rows || `<tr><td colspan="4"><div class="empty-state">No samples in this cohort.</div></td></tr>`;
+}
+document.getElementById('cohortFilter').addEventListener('change', renderBiomarkers);
+document.getElementById('exportResearchBtn').addEventListener('click', ()=> toast('De-identified dataset exported for IRB-approved research use (demo)'));
+
+/* ---------------- Settings / feedback ---------------- */
+document.getElementById('submitFeedbackBtn').addEventListener('click', ()=>{
+  const val = document.getElementById('feedbackText').value.trim();
+  if(!val){ toast('Write a note before submitting'); return; }
+  document.getElementById('feedbackText').value='';
+  auditLog.unshift({text:'Feedback submitted about the prototype', time:'Just now'});
+  toast('Thank you — feedback submitted');
+  renderFeed();
+});
+
+/* ---------------- Render orchestration ---------------- */
+function renderAll(){
+  renderKpis(); renderFunnel(); renderFeed(); renderTable(); renderKanban(); renderAppointments(); renderBiomarkers();
+  if(document.getElementById('panel-analytics').classList.contains('active')) renderCharts();
+}
+setTheme(true);
+renderAll();
+</script>
+
+
+</body></html>
